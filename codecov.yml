@@ -8,7 +8,7 @@ ignore:
 
 coverage:
   # range for color spectrum display, red=50%, green=80%
-  range: "50...80"
+  range: "50...81"
   round: down
   precision: 1
 
