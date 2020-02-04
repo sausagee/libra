@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - run: echo "If you can read this, gh actions flow in this PR is used."
     - name: Setup env
       run: |
         echo "::set-env name=LIBRA_GIT_REV::$(git rev-parse --short=8 HEAD)"
