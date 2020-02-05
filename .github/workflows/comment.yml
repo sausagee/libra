@@ -1,0 +1,41 @@
+on: push
+
+jobs:
+  eezy:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+            #pulls = await github.pull_requests(context.repo.owner,
+            #context.repo.owner);
+            #pr = pulls.find{ |pr| pr["head"]["sha"] == context.sha }
+      - name: Comment on PR iff failed
+        if: always()
+        uses: actions/github-script@0.4.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            body = 'Hello, something happened in ${{github.event.after}}'
+            const pulls = await github.pulls.list(
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo
+                state: open
+              }
+            )
+            for (const pr of pulls) {
+              if (pr.head.sha == github.event.after) {
+                foo = pr.number
+                break
+              }
+            }
+            await github.issues.createComment(
+              {
+                issue_number: 1,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: body,
+              }
+            )
