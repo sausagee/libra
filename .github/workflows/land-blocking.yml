@@ -1,27 +1,74 @@
 ---
 name: Land-blocking Test
 
-on:
-  push:
-    branches:
-      - auto
+on: push
+  #push:
+  #  branches:
+  #    - auto
 
 jobs:
   build-and-run-cluster-test:
     name: Build images and run cluster test
-    runs-on: self-hosted
+    #runs-on: self-hosted
+    runs-on: ubuntu-16.04
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup env
-      run: |
-        echo "::set-env name=LIBRA_GIT_REV::$(git rev-parse --short=8 HEAD)"
-    - name: Build, tag and push images
-      run: |
-        docker/build-aws.sh --build-all --version $LIBRA_GIT_REV --addl_tags canary
-    - name: Launch cluster test
-      run: |
-        JUMPHOST=${{secrets.CLUSTER_TEST_JUMPHOST}} \
-        ./scripts/cti \
+      - uses: actions/checkout@v1
+      - name: Setup env
+        run: |
+          echo "::set-env name=LIBRA_GIT_REV::$(git rev-parse --short=8 HEAD)"
+      - name: Build, tag and push images
+        run: |
+          echo docker/build-aws.sh --build-all --version $LIBRA_GIT_REV --addl_tags canary
+      - name: Launch cluster test
+        run: |
+          JUMPHOST=${{secrets.CLUSTER_TEST_JUMPHOST}} \
+          echo ./scripts/cti \
           --tag dev_$LIBRA_GIT_REV \
           --report report.json \
           --run bench
+      - name: Post test results on PR
+        if: always()
+        uses: actions/github-script@0.4.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs');
+            fs.readFile('report.json', 'utf-8', (err, data) => {
+              if (err) {
+                console.log('Error -', err);
+                body = "Cluster Test failed. Check https://github.com/libra/libra/actions/runs/${{github.run_id}}";
+              } else {
+                body = `Cluster Test Result:
+            \`\`\`
+            ${data}
+            \`\`\`
+            `;
+              }
+            });
+            const pulls = await github.pulls.list(
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: "open",
+                sort: "updated",
+              }
+            );
+            pr_num = 0;
+            for (const pull of pulls.data) {
+              if (pull.head.sha === context.sha) {
+                pr_num = pull.number;
+                break;
+                }
+            }
+            if (pr_num) {
+              await github.issues.createComment(
+                {
+                  issue_number: pr_num,
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  body: body,
+                }
+              );
+            } else {
+              console.log('Error - failed to find original pull request.');
+            }

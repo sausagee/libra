@@ -1,0 +1,35 @@
+{
+  "metrics": [
+    {
+      "experiment": "all up",
+      "metric": "avg_tps",
+      "value": 656.7758121976741
+    },
+    {
+      "experiment": "all up",
+      "metric": "avg_latency",
+      "value": 999.9520082039262
+    },
+    {
+      "experiment": "10% down",
+      "metric": "avg_tps",
+      "value": 382.1493870788434
+    },
+    {
+      "experiment": "10% down",
+      "metric": "avg_latency",
+      "value": 1622.5916892408934
+    },
+    {
+      "experiment": "3 Region Simulation",
+      "metric": "avg_tps",
+      "value": 449.8047308288467
+    },
+    {
+      "experiment": "3 Region Simulation",
+      "metric": "avg_latency",
+      "value": 1718.4681522767532
+    }
+  ],
+  "text": "all up : 657 TPS, 1000.0 ms latency\n10% down : 382 TPS, 1622.6 ms latency\n3 Region Simulation : 450 TPS, 1718.5 ms latency"
+}
