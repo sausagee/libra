@@ -25,3 +25,5 @@ jobs:
           --tag dev_$LIBRA_GIT_REV \
           --report report.json \
           --run bench
+    - name: comment on push
+      run: echo "comment on push"
