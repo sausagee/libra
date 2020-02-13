@@ -1,0 +1,31 @@
+{
+  "metrics": [
+    {
+      "experiment": "all up",
+      "metric": "submitted_txn",
+      "value": 247440.0
+    },
+    {
+      "experiment": "all up",
+      "metric": "expired_txn",
+      "value": 0.0
+    },
+    {
+      "experiment": "all up",
+      "metric": "avg_txns_per_block",
+      "value": 800.9688560503824
+    },
+    {
+      "experiment": "all up",
+      "metric": "avg_tps",
+      "value": 1017.3792661561425
+    },
+    {
+      "experiment": "all up",
+      "metric": "avg_latency",
+      "value": 3049.388105461777
+    }
+  ],
+  "text": "all up : 1017 TPS, 3049.4 ms latency, no expired txns"
+}
+
