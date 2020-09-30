@@ -5630,9 +5630,9 @@ dependencies = [
 
 [[package]]
 name = "serde-generate"
-version = "0.14.2"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e7f3867c5c27f7639bb21c6e85f416cb8b36bbff0b154a7e82211ab33b5bc0e6"
+checksum = "055a9bee1a567f86479d9ff82cde1f06c8e5fc72a24c70c4614143800c4b8684"
 dependencies = [
  "heck",
  "include_dir",
