@@ -26,7 +26,6 @@ const EXPECTED_OUTPUT: &str = "224 1 161 28 235 11 1 0 0 0 7 1 0 2 2 2 4 3 6 16 
 
 // Cannot run this test in the CI of Diem.
 #[test]
-#[ignore]
 fn test_that_python_code_parses_and_passes_pyre_check() {
     let registry = get_diem_registry();
     let abis = get_stdlib_script_abis();
@@ -176,7 +175,6 @@ test = false
 }
 
 #[test]
-#[ignore]
 fn test_that_cpp_code_compiles_and_demo_runs() {
     let registry = get_diem_registry();
     let abis = get_stdlib_script_abis();
@@ -222,7 +220,6 @@ fn test_that_cpp_code_compiles_and_demo_runs() {
 }
 
 #[test]
-#[ignore]
 fn test_that_java_code_compiles_and_demo_runs() {
     let registry = get_diem_registry();
     let abis = get_stdlib_script_abis();
@@ -299,7 +296,6 @@ fn test_that_java_code_compiles_and_demo_runs() {
 }
 
 #[test]
-#[ignore]
 fn test_that_golang_code_compiles_and_demo_runs() {
     let registry = get_diem_registry();
     let abis = get_stdlib_script_abis();
